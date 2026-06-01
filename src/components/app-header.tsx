@@ -15,19 +15,13 @@ import { ChevronRight } from "lucide-react"
 
 /**
  * DESIGNER NOTE: Wise-style top header
- * — Left: sidebar trigger + WISE logo. Right: Earn CTA + user profile (avatar, name, dropdown).
+ * — Right: Earn CTA + user profile (avatar, name, dropdown).
  * — Restyle: edit button variants, avatar size, or add --wise-* CSS variables in globals.css.
  */
 export function AppHeader() {
   return (
-    <header className="shrink-0 border-b border-border bg-background">
-      <div className="mx-auto flex h-14 w-full max-w-[976px] items-center gap-4 px-4">
-        <SidebarTrigger className="-ml-1" />
-        {/* DESIGNER: Replace with your logo asset or SVG; Wise uses green "WISE" wordmark */}
-        <div className="flex items-center gap-2">
-          <span className="text-xl font-bold text-primary">WISE</span>
-        </div>
-        <div className="flex flex-1" />
+    <header className="mt-16 mb-14 shrink-0 bg-background">
+      <div className="mx-auto flex h-14 w-full max-w-[976px] items-center justify-end gap-2 px-4">
         <div className="flex items-center gap-2">
           <Button size="sm" className="bg-primary text-primary-foreground hover:bg-primary/90">
             Earn €90

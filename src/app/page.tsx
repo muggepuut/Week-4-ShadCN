@@ -7,8 +7,10 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { ArrowUpCircle, PlusCircle } from "lucide-react"
+import { TransactionListIcon } from "@/components/transaction-list-icon"
 import audFlag from "@assets/flags/aud.png"
+import arrowUpIcon from "@assets/icons/arrow-up.png"
+import plusIcon from "@assets/icons/plus.png"
 import cadFlag from "@assets/flags/cad.png"
 import eurFlag from "@assets/flags/eur.png"
 import gbpFlag from "@assets/flags/gbp.png"
@@ -38,16 +40,41 @@ const CURRENCY_ACCOUNTS: {
 ]
 
 const RECENT_TRANSACTIONS = [
-  { id: "1", icon: ArrowUpCircle, name: "Hannah Johnson", subtitle: "Sent - 18 Apr", amount: "49 EUR", isCredit: false },
-  { id: "2", icon: PlusCircle, name: "To EUR", subtitle: "Added - 18 Apr", amount: "+ 50 EUR", subAmount: "50.44 EUR", isCredit: true },
-  { id: "3", icon: ArrowUpCircle, name: "Brandon Bolt", subtitle: "Sent - 2 Apr", amount: "110 EUR", isCredit: false },
+  {
+    id: "1",
+    icon: arrowUpIcon,
+    iconAlt: "Sent",
+    name: "Hannah Johnson",
+    subtitle: "Sent - 18 Apr",
+    amount: "49 EUR",
+    isCredit: false,
+  },
+  {
+    id: "2",
+    icon: plusIcon,
+    iconAlt: "Added",
+    name: "To EUR",
+    subtitle: "Added - 18 Apr",
+    amount: "+ 50 EUR",
+    subAmount: "50.44 EUR",
+    isCredit: true,
+  },
+  {
+    id: "3",
+    icon: arrowUpIcon,
+    iconAlt: "Sent",
+    name: "Brandon Bolt",
+    subtitle: "Sent - 2 Apr",
+    amount: "110 EUR",
+    isCredit: false,
+  },
 ]
 
 export default function Home() {
   return (
-    <div className="mx-auto flex w-full max-w-[976px] flex-1 flex-col gap-6 p-6">
+    <div className="mx-auto flex w-full max-w-[976px] flex-1 flex-col p-6">
       {/* Total balance + actions */}
-      <section className="space-y-5">
+      <section className="mb-6 space-y-5">
         <div className="space-y-0">
           <p className="text-sm font-medium text-balance-foreground">Total balance</p>
           <h2 className="text-3xl font-bold tracking-tight">1.00 EUR</h2>
@@ -64,11 +91,11 @@ export default function Home() {
       </section>
 
       {/* Currency account cards */}
-      <section className="overflow-x-auto">
+      <section className="mb-14 overflow-x-auto">
         <div className="flex w-max gap-[12px]">
         {CURRENCY_ACCOUNTS.map((account) => (
-          <Card key={account.code} className="h-[206px] w-[256px] shrink-0 gap-3 py-4">
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+          <Card key={account.code} className="h-[206px] w-[256px] shrink-0 justify-between gap-0 py-4">
+            <CardHeader className="flex flex-row items-center justify-start space-y-0 pb-0">
               <Image
                 src={account.flag}
                 alt={`${account.label} flag`}
@@ -78,7 +105,7 @@ export default function Home() {
               />
               <CardTitle className="text-base font-medium">{account.label}</CardTitle>
             </CardHeader>
-            <CardContent className="space-y-1">
+            <CardContent className="flex flex-1 flex-col justify-end space-y-1 pt-0">
               <p className="text-xs text-muted-foreground">Account - {account.accountId}</p>
               <p className="text-2xl font-bold">{account.balance}</p>
             </CardContent>
@@ -91,18 +118,18 @@ export default function Home() {
       <section className="space-y-4">
         <div className="flex items-center justify-between">
           <h2 className="text-lg font-semibold">Transactions</h2>
-          <Link
-            href="/"
-            className="text-sm font-medium text-primary underline-offset-4 hover:underline"
-          >
-            See all
-          </Link>
+          <Button variant="ghost" size="sm" className="h-auto px-0" asChild>
+            <Link href="/">See all</Link>
+          </Button>
         </div>
         <ul className="divide-y divide-border">
           {RECENT_TRANSACTIONS.map((tx) => (
             <li key={tx.id} className="flex items-center gap-4 py-3">
-              <div className="flex size-10 shrink-0 items-center justify-center rounded-full bg-muted">
-                <tx.icon className="size-5 text-muted-foreground" />
+              <div
+                data-slot="transaction-icon"
+                className="flex size-12 shrink-0 items-center justify-center rounded-full border border-transaction-icon-border bg-transaction-icon"
+              >
+                <TransactionListIcon src={tx.icon} alt={tx.iconAlt} />
               </div>
               <div className="min-w-0 flex-1">
                 <p className="font-medium">{tx.name}</p>
